@@ -58,8 +58,33 @@ clue(8, Solution) :-
     member(p(_, research, Lang, data), Solution),
     Lang \= javascript.
     
- 
+% solve(Active, Solution) succeeds when Solution satisfies every active clue.
+solve(Active, Solution) :-
+    generate_solution(Solution),
+    forall(
+        member(N, Active),
+        clue(N, Solution)
+    ).
 
+
+
+% main/0 prints one solution satisfying clues 1 to 8.
+main :-
+    once(solve([1,2,3,4,5,6,7,8], Solution)),
+    print_solution(Solution).
+
+% Prints the solution in the required four-line format.
+print_solution([
+    p('Alex', AD, AL, AP),
+    p('Ben', BD, BL, BP),
+    p('Carla', CD, CL, CP),
+    p('Dana', DD, DL, DP)
+]) :-
+    format("Alex = [~w, ~w, ~w]~n", [AD, AL, AP]),
+    format("Ben = [~w, ~w, ~w]~n", [BD, BL, BP]),
+    format("Carla = [~w, ~w, ~w]~n", [CD, CL, CP]),
+    format("Dana = [~w, ~w, ~w]~n", [DD, DL, DP]).
+    
 
 
 
