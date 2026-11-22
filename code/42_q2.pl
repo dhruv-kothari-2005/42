@@ -60,3 +60,23 @@ expression_string(Tree, String) :-
     ;   RightText = RightString
     ),
     format(string(String), '~s~a~s', [LeftText, Operator, RightText]).
+
+% generate_equation(+List, -Equation) yields one equation per answer.
+generate_equation(List, Equation) :-
+    split_nonempty(List, LeftNumbers, RightNumbers),
+    expression_tree(LeftNumbers, LeftTree, LeftValue),
+    expression_tree(RightNumbers, RightTree, RightValue),
+    LeftValue =:= RightValue,
+    expression_string(LeftTree, LeftString),
+    expression_string(RightTree, RightString),
+    format(string(Equation), '~s=~s', [LeftString, RightString]).
+
+% all_equations(+List, -Equations) collects distinct equation strings in standard order.
+all_equations(List, Equations) :-
+    findall(Equation, generate_equation(List, Equation), Generated),
+    sort(Generated, Equations).
+
+% count_equations(+List, -N) counts distinct valid equations.
+count_equations(List, N) :-
+    all_equations(List, Equations),
+    length(Equations, N).
