@@ -68,6 +68,7 @@ solve(Active, Solution) :-
 
 
 
+
 % main/0 prints one solution satisfying clues 1 to 8.
 main :-
     once(solve([1,2,3,4,5,6,7,8], Solution)),
@@ -86,7 +87,10 @@ print_solution([
     format("Dana = [~w, ~w, ~w]~n", [DD, DL, DP]).
     
 
-
+% count_solutions(Active, N) succeeds when N is the number of assignments satisfying all active clues.
+count_solutions(Active, N) :-
+    findall(Solution, solve(Active, Solution), Solutions),
+    length(Solutions, N).
 
 
 
