@@ -10,3 +10,12 @@
   (if (null? lst)
       0
       (+ 1 (my-length (cdr lst)))))
+
+;; my-map : (any -> any) list -> list
+;; Applies f to each top-level element of lst in order and returns
+;; the new list.  The structure (order and length) is preserved.
+(define (my-map f lst)
+  (if (null? lst)
+      '()
+      (cons (f (car lst))
+            (my-map f (cdr lst)))))
