@@ -20,20 +20,36 @@
       (cons (f (car lst))
             (my-map f (cdr lst)))))
 
+;; make-inserter : any (number -> bool) -> (list -> list)
+;; Returns a one-argument function (call it inserter) that, given a list,
+;; inserts x at the front of every list at every nesting level whose
+;; top-level length satisfies len-ok?.
+;;
+;; x and len-ok? are captured by the closure.  The returned inserter never
+;; needs to receive x again — it already carries x in its environment.
+;; At each list it visits it:
+;;   1. measures the original length with my-length,
+;;   2. recurses into every sublist element by calling itself via my-map,
+;;   3. prepends x to the processed list when (len-ok? len) is true.
+(define (make-inserter x len-ok?)
+  (define (inserter lst)
+    (let ((len (my-length lst)))
+      (let ((processed (my-map (lambda (e)
+                                 (if (pair? e)
+                                     (inserter e)
+                                     e))
+                               lst)))
+        (if (len-ok? len)
+            (cons x processed)
+            processed))))
+  inserter)
+
 ;; insert-if-short : any list number -> list
 ;; Inserts x at the front of every list (at every nesting level) whose
 ;; top-level length, measured BEFORE insertion, is less than n.
-;; Atoms are left unchanged.  Empty lists qualify when 0 < n.
+;; Defined using make-inserter as required by part c.
 (define (insert-if-short x lst n)
-  (let ((len (my-length lst)))
-    (let ((processed (my-map (lambda (e)
-                               (if (pair? e)
-                                   (insert-if-short x e n)
-                                   e))
-                             lst)))
-      (if (< len n)
-          (cons x processed)
-          processed))))
+  ((make-inserter x (lambda (len) (< len n))) lst))
 
 ;; print-insert-result : -> void
 ;; Reads x, lst and n from standard input (in that order).
