@@ -19,3 +19,18 @@
       '()
       (cons (f (car lst))
             (my-map f (cdr lst)))))
+
+;; insert-if-short : any list number -> list
+;; Inserts x at the front of every list (at every nesting level) whose
+;; top-level length, measured BEFORE insertion, is less than n.
+;; Atoms are left unchanged.  Empty lists qualify when 0 < n.
+(define (insert-if-short x lst n)
+  (let ((len (my-length lst)))
+    (let ((processed (my-map (lambda (e)
+                               (if (pair? e)
+                                   (insert-if-short x e n)
+                                   e))
+                             lst)))
+      (if (< len n)
+          (cons x processed)
+          processed))))
