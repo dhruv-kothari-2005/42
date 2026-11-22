@@ -1,14 +1,5 @@
 #lang racket/base
 
-(provide inorder-helper
-         preorder-helper
-         postorder-helper
-         tree-height
-         leaf-count
-         print-inorder
-         print-all-traversals
-         print-height-and-leaves)
-
 ;; S1: Binary Tree Traversals
 ;; A tree is either () or (value left right).
 ;; value is a number or a single-character symbol.

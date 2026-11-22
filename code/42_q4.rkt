@@ -1,11 +1,5 @@
 #lang racket/base
 
-(provide my-length
-         my-map
-         make-inserter
-         insert-if-short
-         print-insert-result)
-
 ;; S2: Conditionally Insert into a Nested List
 
 ;; my-length : list -> number
