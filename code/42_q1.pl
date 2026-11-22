@@ -58,6 +58,10 @@ clue(8, Solution) :-
     member(p(_, research, Lang, data), Solution),
     Lang \= javascript.
     
+% CLUE 9: The person who prefers the AI project works in the testing department.
+clue(9, Solution) :-
+    member(p(_, testing, _, 'AI'), Solution).
+ 
 % solve(Active, Solution) succeeds when Solution satisfies every active clue.
 solve(Active, Solution) :-
     generate_solution(Solution),
