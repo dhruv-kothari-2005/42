@@ -63,7 +63,7 @@
 ;; middle (()) length 1, 1 < 3 true → (5 ...)
 ;; inner () length 0, 0 < 3 true → (5)
 ;; expected: (5 (5 (5)))
-(display (insert-if-short 5 '((()))) 3))
+(display (insert-if-short 5 '((())) 3))
 (newline)
 
 ;; ── Custom len-ok? via make-inserter ─────────────────────────────────────────

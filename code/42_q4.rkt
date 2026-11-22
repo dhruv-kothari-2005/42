@@ -1,5 +1,11 @@
 #lang racket/base
 
+(provide my-length
+         my-map
+         make-inserter
+         insert-if-short
+         print-insert-result)
+
 ;; S2: Conditionally Insert into a Nested List
 
 ;; my-length : list -> number
@@ -29,13 +35,17 @@
 ;; needs to receive x again — it already carries x in its environment.
 ;; At each list it visits it:
 ;;   1. measures the original length with my-length,
-;;   2. recurses into every sublist element by calling itself via my-map,
+;;   2. recurses into every element that is itself a list (pair? OR null?),
 ;;   3. prepends x to the processed list when (len-ok? len) is true.
+;;
+;; An element is a list if it is either a pair or the empty list.
+;; pair? alone misses (), so we use (or (pair? e) (null? e)) to recurse
+;; into empty sublists — they have length 0 and may qualify for insertion.
 (define (make-inserter x len-ok?)
   (define (inserter lst)
     (let ((len (my-length lst)))
       (let ((processed (my-map (lambda (e)
-                                 (if (pair? e)
+                                 (if (or (pair? e) (null? e))
                                      (inserter e)
                                      e))
                                lst)))
