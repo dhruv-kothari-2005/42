@@ -1,5 +1,5 @@
 ;; test_q4.rkt — S2 test calls
-;; Run as: racket -f code/42_q4.rkt -f tests/test_q4.rkt
+;; Run as: cat code/42_q4.rkt tests/test_q4.rkt > /tmp/42_q4_test.rkt && racket /tmp/42_q4_test.rkt
 ;; (mimics the grader appending these calls to the solution file)
 
 ;; ── Helpers for building large test inputs ───────────────────────────────────

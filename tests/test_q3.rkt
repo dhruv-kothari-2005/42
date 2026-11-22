@@ -1,5 +1,5 @@
 ;; test_q3.rkt — S1 test calls
-;; Run as: racket -f code/42_q3.rkt -f tests/test_q3.rkt
+;; Run as: cat code/42_q3.rkt tests/test_q3.rkt > /tmp/42_q3_test.rkt && racket /tmp/42_q3_test.rkt
 ;; (mimics the grader appending these calls to the solution file)
 
 ;; ── Trees from the assignment PDF ────────────────────────────────────────────
